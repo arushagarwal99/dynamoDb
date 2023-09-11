@@ -16,7 +16,7 @@ public class Main {
                 // The region is meaningless for local DynamoDb but required for client builder validation
                 .region(Region.AP_SOUTH_1)
                 .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create("AKIATE43HRL5WATVF5AN", "FnkXRPM8cH5jVnJM/2fmi2Xv5UTXC/+mwSj0m9jB")))
+                        AwsBasicCredentials.create("", "")))
                 .build();
         DynamoDbRepository db = new DynamoDbRepository(client, "metadata");
         db.createTableIfNotExists();
