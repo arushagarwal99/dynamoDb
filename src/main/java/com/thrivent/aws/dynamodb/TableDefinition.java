@@ -1,4 +1,4 @@
-package org.example.aws.dynamodb;
+package com.thrivent.aws.dynamodb;
 
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 

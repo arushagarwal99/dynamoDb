@@ -1,11 +1,12 @@
-package org.example.datacontract;
+package com.thrivent.datacontract;
 
-import org.example.aws.dynamodb.TableSchemaBuilder;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
 
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primarySortKey;
+
+import com.thrivent.aws.dynamodb.TableSchemaBuilder;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
 
 class DataContractTableSchema extends TableSchemaBuilder<DataContract, ImmutableDataContract.Builder> {
 

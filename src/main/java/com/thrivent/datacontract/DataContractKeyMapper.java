@@ -1,6 +1,6 @@
-package org.example.datacontract;
+package com.thrivent.datacontract;
 
-import org.example.aws.dynamodb.KeyMapper;
+import com.thrivent.aws.dynamodb.KeyMapper;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package org.example.core.repository;
+package com.thrivent.core.repository;
 
 import java.util.Optional;
 
@@ -8,9 +8,7 @@ public interface CrudRepository<T, K> {
 
     boolean existsById(K id);
 
-    Iterable<T> findAll();
-
-    Optional<T> findById(K id);
+    Iterable<T> readAll();
 
     T getById(K id);
 

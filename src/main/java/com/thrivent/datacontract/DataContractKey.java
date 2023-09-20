@@ -1,6 +1,7 @@
-package org.example.datacontract;
+package com.thrivent.datacontract;
 
-import org.apache.commons.lang3.Validate;
+
+import software.amazon.awssdk.utils.Validate;
 
 import java.util.OptionalLong;
 

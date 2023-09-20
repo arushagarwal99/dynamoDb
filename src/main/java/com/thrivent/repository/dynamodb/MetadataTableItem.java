@@ -1,5 +1,4 @@
 package com.thrivent.repository.dynamodb;
-
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -28,7 +27,7 @@ public final class MetadataTableItem {
 
     private String value;
 
-    @DynamoDbAttribute("partitionKey")
+    @DynamoDbAttribute("partition_key")
     @DynamoDbPartitionKey
     public String getPartitionKey() {
         return partitionKey;
@@ -37,7 +36,7 @@ public final class MetadataTableItem {
     public void setPartitionKey(String partitionKey) {
         this.partitionKey = partitionKey;
     }
-    @DynamoDbAttribute("sortKey")
+    @DynamoDbAttribute("sort_key")
     @DynamoDbSortKey
     public String getSortKey() {
         return sortKey;
@@ -54,5 +53,14 @@ public final class MetadataTableItem {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "MetadataTableItem{" +
+                "partitionKey='" + partitionKey + '\'' +
+                ", sortKey='" + sortKey + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
 }

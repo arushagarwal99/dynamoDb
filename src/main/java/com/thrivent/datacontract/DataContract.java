@@ -1,4 +1,4 @@
-package org.example.datacontract;
+package com.thrivent.datacontract;
 
 import static org.immutables.value.Value.Immutable;
 import static org.immutables.value.Value.Modifiable;
