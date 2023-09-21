@@ -5,7 +5,7 @@ import com.thrivent.aws.dynamodb.KeyMapper;
 import com.thrivent.aws.dynamodb.TableSchemaBuilder;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 
-public class DataContractDynamoDbRepository extends DynamoDbCrudRepository<DataContract, ImmutableDataContract.Builder, DataContractKey> {
+public class DataContractDynamoDbRepository  extends DynamoDbCrudRepository<DataContract, ImmutableDataContract.Builder, DataContractKey> implements DataContractRepository {
 
     public DataContractDynamoDbRepository(DynamoDbEnhancedClient client) {
         super(client);

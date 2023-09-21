@@ -1,5 +1,6 @@
 package com.thrivent.aws.dynamodb;
 
+import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.StaticImmutableTableSchema;
@@ -31,6 +32,9 @@ public abstract class TableSchemaBuilder<T, B> {
 
     protected final <R> ImmutableAttribute.Builder<T, B, R> attribute(Class<R> attributeClass) {
         return ImmutableAttribute.builder(immutableItemClass, immutableBuilderClass, attributeClass);
+    }
+    protected final <R> ImmutableAttribute.Builder<T, B, R> attribute(EnhancedType<R> attributeType) {
+        return ImmutableAttribute.builder(immutableItemClass, immutableBuilderClass, attributeType);
     }
 
     public abstract TableSchema<T> build();

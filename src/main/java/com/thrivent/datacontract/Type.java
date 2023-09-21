@@ -1,4 +1,4 @@
-package com.thrivent.repository.dynamodb;
+package com.thrivent.datacontract;
 
 public enum Type {
     INGESTION("INGESTION"),
@@ -9,5 +9,9 @@ public enum Type {
     Type(String type)
     {
         this.type = type;
+    }
+    public String getType()
+    {
+        return this.type;
     }
 }
