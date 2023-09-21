@@ -1,17 +1,14 @@
 package com.thrivent.datacontract;
 
+import com.thrivent.aws.dynamodb.TableSchemaBuilder;
 import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
+
+import java.util.Set;
 
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
 import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primarySortKey;
-
-import com.thrivent.aws.dynamodb.TableSchemaBuilder;
-
-import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
-
-
-import java.util.Set;
 
 class DataContractTableSchema extends TableSchemaBuilder<DataContract, ImmutableDataContract.Builder> {
 
@@ -44,7 +41,7 @@ class DataContractTableSchema extends TableSchemaBuilder<DataContract, Immutable
                 .tags(primaryPartitionKey())
                 .name("partitionKey")
                 .getter(DataContractKeyHelper::partitionKey)
-                .setter(ImmutableDataContract.Builder::name)
+                .setter(DataContractKeyHelper::setterPartitionKey)
                 .build();
     }
 
@@ -56,8 +53,6 @@ class DataContractTableSchema extends TableSchemaBuilder<DataContract, Immutable
                 .setter(NOOP)
                 .build();
     }
-
-
 
     private ImmutableAttribute<DataContract, ImmutableDataContract.Builder, String> domain() {
         return attribute(String.class)

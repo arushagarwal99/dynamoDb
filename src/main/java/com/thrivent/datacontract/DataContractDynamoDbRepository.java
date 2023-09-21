@@ -5,8 +5,13 @@ import com.thrivent.aws.dynamodb.KeyMapper;
 import com.thrivent.aws.dynamodb.TableSchemaBuilder;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 
-public class DataContractDynamoDbRepository  extends DynamoDbCrudRepository<DataContract, ImmutableDataContract.Builder, DataContractKey> implements DataContractRepository {
+import javax.inject.Inject;
 
+public class DataContractDynamoDbRepository
+        extends DynamoDbCrudRepository<DataContract, ImmutableDataContract.Builder, DataContractKey>
+        implements DataContractRepository {
+
+    @Inject
     public DataContractDynamoDbRepository(DynamoDbEnhancedClient client) {
         super(client);
     }

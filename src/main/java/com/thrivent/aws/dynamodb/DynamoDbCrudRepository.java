@@ -20,20 +20,20 @@ public abstract class DynamoDbCrudRepository<T, B, K>
     }
 
     @Override
-    public T getById(K id){
+    public T getById(K id) {
         final Key key = keyMapper().map(id);
         final T item = (T) table().getItem(key);
         return item;
     }
 
     @Override
-    public T create(T entity){
+    public T create(T entity) {
         table().putItem(entity);
         return entity;
     }
 
     @Override
-    public  T update(T t){
+    public T update(T t) {
         return (T) table().updateItem(t);
     }
 
@@ -57,7 +57,8 @@ public abstract class DynamoDbCrudRepository<T, B, K>
         throw new RuntimeException("Not supported Now");
     }
 
-
     @Override
-    public long count() { throw new RuntimeException("Not supported Now"); }
+    public long count() {
+        throw new RuntimeException("Not supported Now");
+    }
 }

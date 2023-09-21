@@ -40,4 +40,8 @@ final class DataContractKeyHelper {
         final String k = Objects.requireNonNull(partitionKey);
         return StringUtils.split(k, SEPARATOR)[1];
     }
+
+    public static void setterPartitionKey(ImmutableDataContract.Builder builder, String s) {
+        builder.name(extractName(s));
+    }
 }

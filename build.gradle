@@ -9,24 +9,44 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    dynamodb
+}
+
 dependencies {
     implementation platform('software.amazon.awssdk:bom:2.20.56')
 
-    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    implementation 'com.google.dagger:dagger:2.48'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
     implementation 'org.slf4j:slf4j-simple:2.0.5'
     implementation 'software.amazon.awssdk:dynamodb'
     implementation 'software.amazon.awssdk:dynamodb-enhanced'
 
     compileOnly 'org.immutables:value:2.9.3'
 
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.48'
     annotationProcessor 'org.immutables:value:2.9.3'
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 
+    testImplementation 'com.amazonaws:DynamoDBLocal:2.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+    testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.48'
+
+    dynamodb fileTree (dir: 'lib', include: ["*.dylib", "*.so", "*.dll"])
+    dynamodb 'com.amazonaws:DynamoDBLocal:2.0.0'
 }
 
+task copyNativeDeps(type: Copy) {
+    from configurations.dynamodb
+    into 'build/libs'
+}
+
+test.dependsOn copyNativeDeps
+test.doFirst {
+    systemProperty "java.library.path", 'build/libs'
+}
 test {
     useJUnitPlatform()
 }
