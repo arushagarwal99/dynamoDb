@@ -1,12 +1,15 @@
 package com.thrivent.datacontract;
 
+import com.thrivent.core.annotations.ImmutablesSettings;
+import com.thrivent.core.annotations.Nullable;
+import org.immutables.value.Value.Default;
+import org.immutables.value.Value.Immutable;
+
+import java.time.Instant;
 import java.util.Set;
 
-import static org.immutables.value.Value.Immutable;
-import static org.immutables.value.Value.Modifiable;
-
 @Immutable
-@Modifiable
+@ImmutablesSettings
 public abstract class DataContract {
 
     public abstract String name();
@@ -27,11 +30,23 @@ public abstract class DataContract {
 
     public abstract Set<String> emailNotifications();
 
-    public abstract String createdAt();
+    @Nullable
+    public abstract Instant createdAt();
 
-    public abstract String updatedAt();
+    @Nullable
+    public abstract Instant updatedAt();
 
-    public abstract boolean deleted();
+    @Default
+    public boolean deleted() {
+        return false;
+    }
 
-    public abstract String deletedAt();
+    @Nullable
+    public abstract Instant deletedAt();
+
+    public enum Type {
+        INGESTION,
+        ACTIVATION,
+        TRANSFORMATION;
+    }
 }
