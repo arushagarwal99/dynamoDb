@@ -9,8 +9,20 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
 configurations {
-    dynamodb
+    dynamoDbLocal
+
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    integrationTestCompileOnly.extendsFrom testCompileOnly
+    integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
 }
 
 dependencies {
@@ -29,24 +41,34 @@ dependencies {
 
     testImplementation 'com.amazonaws:DynamoDBLocal:2.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 
     testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.48'
 
-    dynamodb fileTree (dir: 'lib', include: ["*.dylib", "*.so", "*.dll"])
-    dynamodb 'com.amazonaws:DynamoDBLocal:2.0.0'
+    dynamoDbLocal fileTree (dir: 'lib', include: ["*.dylib", "*.so", "*.dll"])
+    dynamoDbLocal 'com.amazonaws:DynamoDBLocal:2.0.0'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 task copyNativeDeps(type: Copy) {
-    from configurations.dynamodb
+    from configurations.dynamoDbLocal
     into 'build/libs'
 }
 
-test.dependsOn copyNativeDeps
-test.doFirst {
-    systemProperty "java.library.path", 'build/libs'
-}
-test {
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    dependsOn copyNativeDeps
+    doFirst {
+        systemProperty "java.library.path", 'build/libs'
+    }
+
     useJUnitPlatform()
 }

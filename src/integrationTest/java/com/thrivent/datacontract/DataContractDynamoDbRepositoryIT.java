@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//@Disabled
 public class DataContractDynamoDbRepositoryIT {
 
     @Singleton
