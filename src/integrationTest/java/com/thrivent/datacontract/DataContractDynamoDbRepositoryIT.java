@@ -14,9 +14,10 @@ import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
 import javax.inject.Singleton;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 
-//@Disabled
 public class DataContractDynamoDbRepositoryIT {
 
     @Singleton
@@ -74,6 +75,12 @@ public class DataContractDynamoDbRepositoryIT {
                 .name(name)
                 .domain("credit")
                 .description("DataContract for CreditCard in Credit Domain.")
+                .protocolVersion("1")
+                .type(DataContract.Type.INGESTION)
+                .owner("tdp")
+                .schedule("5 0 * 8 *")
+                .retentionPeriod(10)
+                .addEmailNotifications("john@example.com", "jane@example.com")
                 .build();
         final String expectedPartitionKey = "DC#" + name;
         final String expectedSortKey = "LATEST";
@@ -84,12 +91,12 @@ public class DataContractDynamoDbRepositoryIT {
                 .tableName(repository.tableName())
                 .build();
         final ScanResponse response = client.scan(request);
-
-        assertEquals(1, response.count().intValue());
+        
+        assertThat(response.count(), equalTo(1));
 
         final Map<String, AttributeValue> item = response.items().get(0);
-        assertEquals(expectedPartitionKey, item.get("partitionKey").s());
-        assertEquals(expectedSortKey, item.get("sortKey").s());
+        assertThat(item.get("partitionKey").s(), equalTo(expectedPartitionKey));
+        assertThat(item.get("sortKey").s(), equalTo(expectedSortKey));
     }
 
     @Test
@@ -99,12 +106,18 @@ public class DataContractDynamoDbRepositoryIT {
                 .name(name)
                 .domain("credit")
                 .description("DataContract for CreditCard in Credit Domain.")
+                .protocolVersion("1")
+                .type(DataContract.Type.INGESTION)
+                .owner("tdp")
+                .schedule("5 0 * 8 *")
+                .retentionPeriod(10)
+                .addEmailNotifications("john@example.com", "jane@example.com")
                 .build();
 
         repository.create(given);
 
         final DataContractKey key = ImmutableDataContractKey.builder().name(name).build();
         final DataContract stored = repository.getById(key);
-        assertEquals(given, stored);
+        assertThat(stored, samePropertyValuesAs(given, "createdAt", "updatedAt"));
     }
 }
