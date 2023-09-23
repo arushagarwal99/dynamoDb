@@ -30,21 +30,31 @@ public class DataContractDynamoDbRepositoryIT {
 
         DynamoDbEnhancedClient dynamoDbEnhancedClient();
 
+        DataContractTableSchema dataContractTableSchema();
+
         DataContractDynamoDbRepository dataContractDynamoDbRepository();
     }
 
     private static Provider provider;
 
-    private DynamoDbClient client;
+    private static DynamoDbClient client;
 
-    private DynamoDbTable<DataContract> table;
+    private static DataContractTableSchema schema;
 
-    private DataContractDynamoDbRepository repository;
+    private static DataContractDynamoDbRepository repository;
+
+    private static DynamoDbTable<DataContract> table;
 
     @BeforeAll
     public static void setupClass() {
         provider = DaggerDataContractDynamoDbRepositoryIT_Provider.create();
         provider.dynamoDbLocal().start();
+
+        client = provider.dynamoDbClient();
+        repository = provider.dataContractDynamoDbRepository();
+        schema = provider.dataContractTableSchema();
+        final DynamoDbEnhancedClient enhancedClient = provider.dynamoDbEnhancedClient();
+        table = enhancedClient.table(schema.tableName(), schema.build());
     }
 
     @AfterAll
@@ -54,12 +64,6 @@ public class DataContractDynamoDbRepositoryIT {
 
     @BeforeEach
     public void setupTest() {
-        client = provider.dynamoDbClient();
-        repository = provider.dataContractDynamoDbRepository();
-
-        // Create new table for each test
-        final DynamoDbEnhancedClient enhancedClient = provider.dynamoDbEnhancedClient();
-        table = enhancedClient.table(repository.tableName(), repository.schemaBuilder().build());
         table.createTable();
     }
 
@@ -88,7 +92,7 @@ public class DataContractDynamoDbRepositoryIT {
         repository.create(dataContract);
 
         final ScanRequest request = ScanRequest.builder()
-                .tableName(repository.tableName())
+                .tableName(schema.tableName())
                 .build();
         final ScanResponse response = client.scan(request);
         

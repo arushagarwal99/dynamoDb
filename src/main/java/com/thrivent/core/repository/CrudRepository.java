@@ -1,7 +1,5 @@
 package com.thrivent.core.repository;
 
-import java.util.Optional;
-
 public interface CrudRepository<T, K> {
 
     long count();

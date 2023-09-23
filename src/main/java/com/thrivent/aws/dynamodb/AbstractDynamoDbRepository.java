@@ -5,25 +5,15 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 
 public abstract class AbstractDynamoDbRepository<T, B, K> {
 
-    protected final DynamoDbEnhancedClient client;
+    protected final DynamoDbTable<T> table;
 
-    private DynamoDbTable<T> table;
+    protected final DynamoDbKeyMapper<T, B, K> keyMapper;
 
     public AbstractDynamoDbRepository(
-            DynamoDbEnhancedClient client) {
-        this.client = client;
+            DynamoDbEnhancedClient client,
+            DynamoDbKeyMapper<T, B, K> keyMapper,
+            TableSchemaBuilder<T, B> schemaBuilder) {
+        this.keyMapper = keyMapper;
+        this.table = client.table(schemaBuilder.tableName(), schemaBuilder.build());
     }
-
-    protected final DynamoDbTable<T> table() {
-        if (table == null) {
-            table = client.table(tableName(), schemaBuilder().build());
-        }
-        return table;
-    }
-
-    protected abstract String tableName();
-
-    protected abstract KeyMapper<K> keyMapper();
-
-    protected abstract TableSchemaBuilder<T, B> schemaBuilder();
 }

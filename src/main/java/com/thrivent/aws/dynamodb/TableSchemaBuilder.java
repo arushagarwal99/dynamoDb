@@ -5,14 +5,10 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.StaticImmutableTableSchema;
 
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public abstract class TableSchemaBuilder<T, B> {
-
-    protected final BiConsumer<B, String> NOOP = (t, u) -> {
-    };
 
     private final Class<T> immutableItemClass;
 
@@ -36,6 +32,8 @@ public abstract class TableSchemaBuilder<T, B> {
     protected final <R> ImmutableAttribute.Builder<T, B, R> attribute(EnhancedType<R> attributeType) {
         return ImmutableAttribute.builder(immutableItemClass, immutableBuilderClass, attributeType);
     }
+
+    public abstract String tableName();
 
     public abstract TableSchema<T> build();
 }
