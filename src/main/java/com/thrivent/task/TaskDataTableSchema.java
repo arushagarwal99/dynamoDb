@@ -9,11 +9,12 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
 
 import java.util.List;
+import java.util.Map;
 
-import static software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags.primaryPartitionKey;
+
 
 public class TaskDataTableSchema extends TableSchemaBuilder<TaskData, ImmutableTaskData.Builder> {
-    private  final TableSchema<SourceDataSetOption> GENERIC_RECORD_SCHEMA = new SourceDataSetOptionSchema().build();
+
     public TaskDataTableSchema() {
         super(TaskData.class, ImmutableTaskData.Builder.class);
     }
@@ -34,6 +35,8 @@ public class TaskDataTableSchema extends TableSchemaBuilder<TaskData, ImmutableT
                 .addAttribute(taskType())
                 .addAttribute(dependsOn())
                 .addAttribute(sourceDataSetOption())
+                .addAttribute(targetDataSetOption())
+                .addAttribute(taskOptions())
                 .build();
     }
     private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, String> targetDataSetName() {
@@ -72,26 +75,40 @@ public class TaskDataTableSchema extends TableSchemaBuilder<TaskData, ImmutableT
                 .setter(ImmutableTaskData.Builder::taskName)
                 .build();
     }
-    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, String> taskType() {
-        return attribute(String.class)
+    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, TaskData.TaskType> taskType() {
+        return attribute(TaskData.TaskType.class)
                 .name("taskType")
                 .getter(TaskData::taskType)
                 .setter(ImmutableTaskData.Builder::taskType)
                 .build();
     }
 
-    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, String> dependsOn() {
-        return attribute(String.class)
+    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, List<String>> dependsOn() {
+        return attribute(EnhancedType.listOf(String.class))
                 .name("dependsOn")
                 .getter(TaskData::dependsOn)
                 .setter(ImmutableTaskData.Builder::dependsOn)
                 .build();
     }
-    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, SourceDataSetOption> sourceDataSetOption() {
-        return attribute( EnhancedType.documentOf( SourceDataSetOption.class, GENERIC_RECORD_SCHEMA))
+    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, Map<String, String>> sourceDataSetOption() {
+        return attribute( EnhancedType.mapOf(String.class, String.class))
                 .name("sourceDataSetOption")
                 .getter(TaskData::sourceDataSetOption)
                 .setter(ImmutableTaskData.Builder::sourceDataSetOption)
+                .build();
+    }
+    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, Map<String, String>> targetDataSetOption() {
+        return attribute( EnhancedType.mapOf(String.class, String.class))
+                .name("targetDataSetOption")
+                .getter(TaskData::targetDataSetOption)
+                .setter(ImmutableTaskData.Builder::targetDataSetOption)
+                .build();
+    }
+    private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, Map<String, String>> taskOptions() {
+        return attribute( EnhancedType.mapOf(String.class, String.class))
+                .name("taskOptions")
+                .getter(TaskData::taskOptions)
+                .setter(ImmutableTaskData.Builder::taskOptions)
                 .build();
     }
 }
