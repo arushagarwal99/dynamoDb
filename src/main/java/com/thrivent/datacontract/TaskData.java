@@ -1,4 +1,4 @@
-package com.thrivent.task;
+package com.thrivent.datacontract;
 
 import com.thrivent.core.annotations.ImmutablesSettings;
 import com.thrivent.core.annotations.Nullable;

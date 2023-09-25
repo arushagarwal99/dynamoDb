@@ -3,7 +3,6 @@ package com.thrivent.datacontract;
 import com.thrivent.core.annotations.ImmutablesSettings;
 import com.thrivent.core.annotations.Nullable;
 
-import com.thrivent.task.TaskData;
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Immutable;
 
@@ -32,7 +31,7 @@ public abstract class DataContract {
     public abstract int retentionPeriod();
 
     public abstract Set<String> emailNotifications();
-    public abstract List<TaskData> task();
+    public abstract List<TaskData> tasks();
 
     @Nullable
     public abstract Instant createdAt();
