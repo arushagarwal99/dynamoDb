@@ -16,7 +16,7 @@ public class DataContractKeyMapper extends AbstractDynamoDbKeyMapper<DataContrac
     private static final String VERSION_PREFIX = "v";
 
     @Inject
-    DataContractKeyMapper() {
+    public DataContractKeyMapper() {
 
     }
 
