@@ -14,9 +14,7 @@ import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
 import javax.inject.Singleton;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DataContractDynamoDbRepositoryIT {
 
@@ -95,12 +93,12 @@ public class DataContractDynamoDbRepositoryIT {
                 .tableName(schema.tableName())
                 .build();
         final ScanResponse response = client.scan(request);
-        
-        assertThat(response.count(), equalTo(1));
+
+        assertThat(response.count()).isEqualTo(1);
 
         final Map<String, AttributeValue> item = response.items().get(0);
-        assertThat(item.get("partitionKey").s(), equalTo(expectedPartitionKey));
-        assertThat(item.get("sortKey").s(), equalTo(expectedSortKey));
+        assertThat(item.get("partitionKey").s()).isEqualTo(expectedPartitionKey);
+        assertThat(item.get("sortKey").s()).isEqualTo(expectedSortKey);
     }
 
     @Test
@@ -122,6 +120,40 @@ public class DataContractDynamoDbRepositoryIT {
 
         final DataContractKey key = ImmutableDataContractKey.builder().name(name).build();
         final DataContract stored = repository.getById(key);
-        assertThat(stored, samePropertyValuesAs(given, "createdAt", "updatedAt"));
+        assertThat(stored).usingRecursiveComparison()
+                        .ignoringFields("createdAt", "updatedAt")
+                        .isEqualTo(given);
+    }
+
+    @Test
+    public void givenExistingDataContract_whenCalledUpdateAndGet_thenDataContractMatches() {
+        final String name = "credit-card-data-contract";
+        final DataContract given = ImmutableDataContract.builder()
+                .name(name)
+                .domain("credit")
+                .description("DataContract for CreditCard in Credit Domain.")
+                .protocolVersion("1")
+                .type(DataContract.Type.INGESTION)
+                .owner("tdp")
+                .schedule("5 0 * 8 *")
+                .retentionPeriod(10)
+                .addEmailNotifications("john@example.com", "jane@example.com")
+                .build();
+        final DataContract existing = repository.create(given);
+
+        final DataContract toBeUpdated = ImmutableDataContract.builder()
+                .from(existing)
+                .protocolVersion("2")
+                .schedule("5 4 0 0 0")
+                .retentionPeriod(15)
+                .build();
+
+        final DataContract updated = repository.update(toBeUpdated);
+        System.out.println(updated);
+        System.out.println(toBeUpdated);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("createdAt", "updatedAt")
+                .isEqualTo(toBeUpdated);
     }
 }
