@@ -1,4 +1,4 @@
-package com.thrivent.datacontract;
+package com.thrivent.service.datacontract;
 
 
 import software.amazon.awssdk.utils.Validate;

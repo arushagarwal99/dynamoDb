@@ -1,4 +1,4 @@
-package com.thrivent.datacontract;
+package com.thrivent.service.datacontract;
 
 import com.thrivent.core.annotations.ImmutablesSettings;
 import com.thrivent.core.annotations.Nullable;
@@ -25,6 +25,8 @@ public abstract class DataContract {
     public abstract Type type();
 
     public abstract String owner();
+    @Nullable
+    public abstract Long version();
 
     public abstract String schedule();
 

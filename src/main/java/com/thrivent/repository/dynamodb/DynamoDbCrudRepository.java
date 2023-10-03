@@ -1,6 +1,6 @@
-package com.thrivent.aws.dynamodb;
+package com.thrivent.repository.dynamodb;
 
-import com.thrivent.core.repository.CrudRepository;
+import com.thrivent.repository.base.CrudRepository;
 import org.apache.commons.lang3.NotImplementedException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.Key;

@@ -2,6 +2,10 @@ package com.thrivent.datacontract;
 
 import com.thrivent.aws.dynamodb.DynamoDbLocal;
 import com.thrivent.aws.dynamodb.DynamoDbLocalModule;
+import com.thrivent.service.datacontract.DataContract;
+import com.thrivent.service.datacontract.DataContractDynamoDbRepository;
+import com.thrivent.service.datacontract.DataContractKey;
+import com.thrivent.service.datacontract.DataContractTableSchema;
 import dagger.Component;
 import org.junit.jupiter.api.*;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;

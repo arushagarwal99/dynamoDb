@@ -1,7 +1,8 @@
-package com.thrivent.datacontract;
+package com.thrivent.service.datacontract;
 
-import com.thrivent.aws.dynamodb.TableSchemaBuilder;
+import com.thrivent.repository.dynamodb.TableSchemaBuilder;
 
+import com.thrivent.datacontract.ImmutableTaskData;
 import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;
@@ -73,6 +74,7 @@ public class TaskDataTableSchema extends TableSchemaBuilder<TaskData, ImmutableT
                 .setter(ImmutableTaskData.Builder::taskName)
                 .build();
     }
+
     private ImmutableAttribute<TaskData, ImmutableTaskData.Builder, TaskData.TaskType> taskType() {
         return attribute(TaskData.TaskType.class)
                 .name("taskType")
@@ -109,4 +111,5 @@ public class TaskDataTableSchema extends TableSchemaBuilder<TaskData, ImmutableT
                 .setter(ImmutableTaskData.Builder::taskOptions)
                 .build();
     }
+
 }

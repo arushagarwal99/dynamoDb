@@ -1,4 +1,4 @@
-package com.thrivent.aws.dynamodb;
+package com.thrivent.repository.dynamodb;
 
 import dagger.Module;
 import dagger.Provides;

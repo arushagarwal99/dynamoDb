@@ -1,6 +1,6 @@
-package com.thrivent.aws.dynamodb;
+package com.thrivent.repository.dynamodb;
 
-import com.thrivent.core.repository.KeyMapper;
+import com.thrivent.repository.base.KeyMapper;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 
 public interface DynamoDbKeyMapper<T, B, K> extends KeyMapper<Key, K> {

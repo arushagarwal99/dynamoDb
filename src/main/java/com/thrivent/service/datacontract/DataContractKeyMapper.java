@@ -1,6 +1,7 @@
-package com.thrivent.datacontract;
+package com.thrivent.service.datacontract;
 
-import com.thrivent.aws.dynamodb.AbstractDynamoDbKeyMapper;
+import com.thrivent.repository.dynamodb.AbstractDynamoDbKeyMapper;
+import com.thrivent.datacontract.ImmutableDataContract;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
@@ -25,7 +26,7 @@ public class DataContractKeyMapper extends AbstractDynamoDbKeyMapper<DataContrac
         Objects.requireNonNull(key);
         return Key.builder()
                 .partitionValue(partitionValue(key.name()))
-                .sortValue(sortValue(0))
+                .sortValue(sortValue((key.version().isEmpty())?null:key.version().getAsLong()))
                 .build();
     }
 
@@ -42,12 +43,14 @@ public class DataContractKeyMapper extends AbstractDynamoDbKeyMapper<DataContrac
 
     @Override
     public String primarySortKeyGetter(DataContract entity) {
-        final DataContract dc = Objects.requireNonNull(entity);
-        return sortValue(0);
+        System.out.println("primarySortKeyGetter-->>"+entity);
+        System.out.println("version in  primarySortKeyGetter-->>"+entity.version());
+        return sortValue(entity.version());
     }
 
     @Override
     public void primarySortKeySetter(ImmutableDataContract.Builder entityBuilder, String value) {
+        System.out.println("value-->>"+value);
 
     }
 
@@ -56,11 +59,13 @@ public class DataContractKeyMapper extends AbstractDynamoDbKeyMapper<DataContrac
         return DC + SEPARATOR + n;
     }
 
-    private String sortValue(long version) {
-        return LATEST_LABEL;
+    private String sortValue(Long version) {
+        System.out.println("version -->>"+version);
+        System.out.println((version == null)?LATEST_LABEL:version(version));
+        return (version == null)?LATEST_LABEL:version(version);
     }
 
-    private String version(int version) {
+    private String version(Long version) {
         Validate.isTrue(version > 0, "Version should be greater than 0.");
         return VERSION_PREFIX + version;
     }

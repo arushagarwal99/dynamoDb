@@ -1,4 +1,4 @@
-package com.thrivent.core.repository;
+package com.thrivent.repository.base;
 
 public interface CrudRepository<T, K> {
 
