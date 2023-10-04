@@ -10,7 +10,7 @@ public interface CrudRepository<T, K> {
 
     T getById(K id);
 
-    T create(T entity);
+    void create(T entity);
 
     T update(T entity);
 

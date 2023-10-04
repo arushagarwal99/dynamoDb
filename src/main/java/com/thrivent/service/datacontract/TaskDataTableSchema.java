@@ -1,8 +1,6 @@
 package com.thrivent.service.datacontract;
 
 import com.thrivent.repository.dynamodb.TableSchemaBuilder;
-
-import com.thrivent.datacontract.ImmutableTaskData;
 import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.ImmutableAttribute;

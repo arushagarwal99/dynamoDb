@@ -4,6 +4,7 @@ import com.thrivent.repository.base.CrudRepository;
 import org.apache.commons.lang3.NotImplementedException;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
 
 public abstract class DynamoDbCrudRepository<T, B, K>
         extends AbstractDynamoDbRepository<T, B, K>
@@ -29,9 +30,11 @@ public abstract class DynamoDbCrudRepository<T, B, K>
     }
 
     @Override
-    public T create(T entity) {
-        table.putItem(entity);
-        return entity;
+    public void create(T entity) {
+         table.putItem(entity);
+//         table.putItemWithResponse(PutItemEnhancedRequest.<T>builder().item(entity).
+//                 build());
+
     }
 
     @Override
