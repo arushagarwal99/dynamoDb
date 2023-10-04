@@ -140,8 +140,9 @@ public class DataContractDynamoDbRepositoryIT {
                 .retentionPeriod(10)
                 .addEmailNotifications("john@example.com", "jane@example.com")
                 .build();
-        final DataContract existing = repository.create(given);
+        repository.create(given);
 
+        final DataContract existing = repository.getById(ImmutableDataContractKey.builder().name(name).build());
         final DataContract toBeUpdated = ImmutableDataContract.builder()
                 .from(existing)
                 .protocolVersion("2")

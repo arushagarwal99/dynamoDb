@@ -32,9 +32,6 @@ public abstract class DynamoDbCrudRepository<T, B, K>
     @Override
     public void create(T entity) {
          table.putItem(entity);
-//         table.putItemWithResponse(PutItemEnhancedRequest.<T>builder().item(entity).
-//                 build());
-
     }
 
     @Override
