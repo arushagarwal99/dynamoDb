@@ -45,6 +45,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 
     testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.48'
+    testAnnotationProcessor 'org.immutables:value:2.9.3'
 
     dynamoDbLocal fileTree (dir: 'lib', include: ["*.dylib", "*.so", "*.dll"])
     dynamoDbLocal 'com.amazonaws:DynamoDBLocal:2.0.0'

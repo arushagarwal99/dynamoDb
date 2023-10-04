@@ -1,7 +1,6 @@
 package com.thrivent.service.datacontract;
 
 import com.thrivent.repository.dynamodb.AbstractDynamoDbKeyMapper;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import software.amazon.awssdk.enhanced.dynamodb.Key;

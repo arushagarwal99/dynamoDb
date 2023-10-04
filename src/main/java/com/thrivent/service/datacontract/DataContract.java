@@ -2,7 +2,6 @@ package com.thrivent.service.datacontract;
 
 import com.thrivent.core.annotations.ImmutablesSettings;
 import com.thrivent.core.annotations.Nullable;
-
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Immutable;
 

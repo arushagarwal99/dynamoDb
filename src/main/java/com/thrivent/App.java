@@ -2,7 +2,7 @@ package com.thrivent;
 
 //import DataContract;
 //import DataContractDynamoDbRepository;
-//import com.thrivent.datacontract.ImmutableDataContractKey;
+//import com.thrivent.service.datacontract.ImmutableDataContractKey;
 //import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 //import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 //import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;

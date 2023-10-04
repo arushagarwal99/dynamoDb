@@ -1,7 +1,6 @@
 package com.thrivent.service.datacontract;
 
 import com.thrivent.core.annotations.ImmutablesSettings;
-import com.thrivent.core.annotations.Nullable;
 import org.immutables.value.Value;
 
 import java.util.List;
